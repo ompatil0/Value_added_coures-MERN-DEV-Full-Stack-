@@ -1,0 +1,54 @@
+/* Blue and White Theme CSS Variables */
+:root {
+  --primary-color: #0d47a1;       /* Deep Navy Blue */
+  --primary-hover: #1565c0;      /* Medium Blue */
+  --secondary-color: #1976d2;    /* SBJITMR Theme Blue */
+  --secondary-hover: #1e88e5;
+  --accent-color: #e3f2fd;       /* Very Light Blue */
+  --accent-hover: #bbdefb;
+  
+  --background-color: #f5f8fa;   /* Clean Off-white/Ice Blue */
+  --card-background: #ffffff;    /* Pure White */
+  
+  --text-primary: #1e293b;       /* Dark Charcoal/Slate */
+  --text-secondary: #475569;     /* Slate Grey */
+  --border-color: #cbd5e1;       /* Light border */
+  --border-focus: #1976d2;       /* Focus Border */
+  
+  --error-color: #d32f2f;        /* Error Red */
+  --success-color: #388e3c;      /* Success Green */
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Base Utility Containers */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.align-center {
+  align-items: center;
+}
