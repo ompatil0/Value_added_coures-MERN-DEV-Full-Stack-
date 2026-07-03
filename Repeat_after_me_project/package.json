@@ -1,0 +1,26 @@
+{
+  "name": "repeat-after-me",
+  "version": "1.0.0",
+  "description": "A beginner-friendly Node.js and Express.js REST API that demonstrates POST requests and JSON parsing middleware.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "expressjs",
+    "rest-api",
+    "middleware",
+    "json",
+    "college-practical"
+  ],
+  "author": "MERN Developer",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.22.2",
+    "mongoose": "^9.7.3"
+  },
+  "type": "commonjs"
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // Import layout styles
 import './App.css';
 
@@ -28,6 +28,21 @@ function App() {
   const [formData, setFormData] = useState(initialFormState);
   const [errors, setErrors] = useState({});
   const [students, setStudents] = useState([]); // List of submitted applications
+
+  // Fetch submitted applications from backend on component mount
+  useEffect(() => {
+    fetch('/api/students')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch applications.');
+        return res.json();
+      })
+      .then((data) => {
+        setStudents(data);
+      })
+      .catch((err) => {
+        console.error('Error fetching applications from server:', err);
+      });
+  }, []);
 
   // 4. Custom Modal State Hooks
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -123,8 +138,31 @@ function App() {
   // 10. Modal OK button click handler
   const handleModalOk = () => {
     if (pendingStudent) {
-      // Save student details
-      setStudents((prev) => [...prev, pendingStudent]);
+      // Save student details to backend database
+      fetch('/api/students', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(pendingStudent)
+      })
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then((data) => {
+            throw new Error(data.error || 'Failed to submit application.');
+          });
+        }
+        return res.json();
+      })
+      .then((savedStudent) => {
+        setStudents((prev) => [...prev, savedStudent]);
+      })
+      .catch((err) => {
+        console.error('Error submitting application:', err);
+        // Fallback: save locally in state if server communication fails
+        // to prevent complete breakage during offline testing
+        setStudents((prev) => [...prev, pendingStudent]);
+      });
     }
 
     // Reset form and errors
@@ -165,8 +203,8 @@ function App() {
                   <h1 className="hero-title">Welcome to SBJITMR</h1>
                   <p className="hero-subtitle">Empowering Future Engineers Through Quality Education.</p>
                   <p className="hero-description">
-                    S. B. Jain Institute of Technology, Management and Research (SBJITMR) is a premier engineering college in Nagpur, Maharashtra. 
-                    We provide a student-centric learning environment, fostering technical expertise, innovation, and leadership skills. 
+                    S. B. Jain Institute of Technology, Management and Research (SBJITMR) is a premier engineering college in Nagpur, Maharashtra.
+                    We provide a student-centric learning environment, fostering technical expertise, innovation, and leadership skills.
                     Join our vibrant campus to shape your engineering career.
                   </p>
                   <Button type="button" variant="primary" onClick={() => navigateTo('admission')}>
@@ -217,7 +255,7 @@ function App() {
                   </div>
                   <div className="info-card">
                     <span className="info-card-icon">💼</span>
-                    <h3 className="info-card-title">Excellent Placements</h3>
+                    <h3 className="info-card-title">NO Placements</h3>
                     <p className="info-card-desc">Strong placement cell providing job opportunities in top MNCs and tech startups.</p>
                   </div>
                   <div className="info-card">
